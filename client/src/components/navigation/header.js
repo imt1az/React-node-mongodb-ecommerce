@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaCartArrowDown,
   FaEnvelope,
@@ -8,8 +8,14 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import logo from '../logo/logo.png'
+const Header = ({ users, signOutUser }) => {
 
-const Header = () => {
+  const [toggle,setToggle] = useState(false);
+
+  const handleToggle = ()=>{
+    setToggle(true);
+  }
   return (
     <>
       {/* <!-- Start Navbar --> */}
@@ -17,11 +23,13 @@ const Header = () => {
         <div className="container mx-auto">
           <div className="flex justify-between">
             <div className="flex justify-center items-center">
-              <div>
-                <Link href="#">
-                  <img src="./images/logo.png" className="w-36" alt="" />
-                </Link>
-              </div>
+             
+                
+                <div>
+                  <img src={logo} className="w-36" alt="" />
+                  </div>
+                
+             
               <div className="hidden md:block ml-8 group relative">
                 <img
                   src="./images/category-icon.svg"
@@ -85,7 +93,10 @@ const Header = () => {
               </div>
             </div>
             <div className="flex justify-center items-center pr-4 md:pr-0">
-              <ul className="list-none">
+              {users.auth ? 
+              
+             <div className="flex items-center">
+               <ul className="list-none">
                 <li className="inline-block  mx-3 sm:mx-4 md:mx-5 relative group">
                   <Link
                     to="/dashboard/user/user_cart"
@@ -157,25 +168,43 @@ const Header = () => {
                   </a>
                 </li>
               </ul>
+              
               <div className="hidden md:block mx-3 group -mt-3">
                 <Link to="/dashboard">
                   <FaUser className="text-slate-900 bg-white text-4xl group-hover:opacity-75 rounded-full shadow py-1.5 px-2.5" />
                 </Link>
               </div>
               <div>
+
+                <span onClick={()=>signOutUser()} className="cursor-pointer hidden md:block mx-3 sm:mx-4 md:mx-0 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-red-800 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-red-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                  Log Out
+                </span>
+              
+              </div>
+             </div>
+             
+              
+              :
+              
+              <div>
                 <button
                   type="button"
                   className="hidden md:block mx-3 sm:mx-4 md:mx-0 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-slate-900 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 >
-                  <Link to='sign_in'>Login</Link>
+                  <Link to="sign_in">Login</Link>
                 </button>
               </div>
+              }
+              
+              
+
+              
             </div>
           </div>
           {/* <!-- Mobile View --> */}
-          <div className="absolute top-1 right-4 cursor-pointer mt-5">
-            <span className="md:hidden navbar-toggle text-slate-900">
-              <FaBars />
+          <div className="absolute top-2 right-2 cursor-pointer mt-5">
+            <span  className="md:hidden navbar-toggle text-slate-900">
+              <FaBars onClick={()=> handleToggle()} />
               {/* <i className="fa-solid fa-bars-staggered" id="toggle-icon"></i> */}
             </span>
           </div>

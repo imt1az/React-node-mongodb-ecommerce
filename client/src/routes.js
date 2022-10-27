@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
-
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { userIsAuth, userSignOut } from "store/actions/user.action";
 import { Routes, Route, BrowserRouter,  } from "react-router-dom";
+
 import Footer from "components/navigation/footer";
 import Home from "components/home";
 import Header from "components/navigation/header";
 import MainLayout from "components/Hoc/MainLayout";
 import RegisterLogin from "components/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { userIsAuth } from "store/actions/user.action";
 import Loading from "utls/products/Loading";
+import UserDashboard from "components/dashboard";
+import AuthGuard from "components/Hoc/AuthGuard";
+import DashboardLayout from "components/Hoc/dasboardLayout";
+import UserInfo from "components/dashboard/user/UserInfo";
+
+
+
 
 
 const Router = (props)=>{
 const [loading,setLoading] = useState(true);
 const users = useSelector(state => state.users);
 const dispatch = useDispatch();
+
+console.log('Toogle',props.toggle );
 
 useEffect(()=>{
   dispatch(userIsAuth())
@@ -30,8 +36,8 @@ useEffect(()=>{
 
 },[users])
 
- const signOutuser = ()=>{
-  alert('Sign Out')
+ const signOutUser = ()=>{
+  dispatch(userSignOut())
  }
 
   return (
@@ -40,13 +46,21 @@ useEffect(()=>{
      <Loading full={true}/>
 
      :
+
      <>
-     <Header users={users}></Header>
+     <Header users={users} signOutUser={signOutUser} ></Header>
+
     <MainLayout>
       <Routes>
+        {/* <Route path='/*' element={<AuthGuard/>}>
+          <Route path='dashboard' element={<UserDashboard/>}/>
+        </Route> */}
+
+        <Route path="/dashboard"  element={<AuthGuard><UserDashboard/></AuthGuard>} />
+        <Route path="/dashboard/user/user_info"  element={<AuthGuard><UserInfo/></AuthGuard>} />
         <Route path="/sign_in" element={<RegisterLogin></RegisterLogin>}/>
         <Route path="/" element={<Home></Home>}/>
-       </Routes>
+      </Routes>
     </MainLayout>
        
        <Footer></Footer>

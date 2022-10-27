@@ -1,6 +1,6 @@
 import * as actions from './index';
 import axios from "axios"
-import { getAuthHeader, getTokenCookie } from 'utls/tools';
+import { getAuthHeader, getTokenCookie, removeTokenCookie } from 'utls/tools';
 
 
 axios.defaults.headers.post['Content-Type']='application/json';
@@ -57,6 +57,37 @@ export const userIsAuth = () => {
             dispatch(actions.userAuthenticate({data: user.data,auth: true}))
         } catch(error){
             dispatch(actions.userAuthenticate({data:{},auth:false}));
+        }
+    }
+}
+
+// SignOut
+
+export const userSignOut = ()=>{
+    return async(dispatch)=>{
+        removeTokenCookie();
+        dispatch(actions.userSignOut())
+        dispatch(actions.successGlobal('Good Bye!'))
+    }
+}
+
+export const userUpdate = (data)=>{
+    return async(dispatch,getState)=>{
+        try{
+         const profile = await axios.patch(`/api/users/profile`,{
+            data:data
+         },getAuthHeader());
+
+         const userData = {
+            ...getState().users.data,
+            firstName: profile.data.firstName,
+            lastName:profile.data.lastName
+         }
+         dispatch(actions.userUpdate(userData))
+         dispatch(actions.successGlobal('Profile Updated'))
+        }
+        catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
         }
     }
 }
