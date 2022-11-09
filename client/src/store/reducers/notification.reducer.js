@@ -1,4 +1,4 @@
-import { CLEAR_NOTIFICATIONS, ERROR_GLOBAL,SUCCESS_GLOBAL } from '../types'
+import { CLEAR_NOTIFICATIONS, ERROR_GLOBAL,REMOVE_PRODUCT,SUCCESS_GLOBAL } from '../types'
 
 
 export default function notificationReducer(state={},action){
@@ -9,6 +9,8 @@ export default function notificationReducer(state={},action){
             return{...state,success:true,msg:action.payload}
         case CLEAR_NOTIFICATIONS:
             return {}
+        case REMOVE_PRODUCT:
+            return{...state,removeArticle:true}      
 
            
            

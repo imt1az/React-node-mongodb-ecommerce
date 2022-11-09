@@ -1,18 +1,25 @@
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
-  ],
+  content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif']
       },
+      
     },
   },
-  daisyui: {
-    themes: [],
-  },
   plugins: [require("daisyui")],
-
+  daisyui: {
+    themes: [
+      {
+        manufacture: {
+          primary: "#0FCFEC",
+          secondary: "#19D3AE",
+          accent: "#3A4256",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
+  },
 }

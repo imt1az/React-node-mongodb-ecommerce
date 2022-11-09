@@ -140,7 +140,7 @@ const paginateProducts = async(req)=>{
       let aggQuery = Product.aggregate(aggQueryArray);
       const options ={
         page:req.body.page,
-        limit:10,
+        limit:2,
         sort:{date:'desc'}
       }
       const products = await Product.aggregatePaginate(aggQuery,options);

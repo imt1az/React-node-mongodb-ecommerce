@@ -7,6 +7,7 @@ import { TextField, Button, Stepper, Step, StepLabel } from "@mui/material";
 import { errorHelper } from "utls/tools";
 import Modal from "react-bootstrap/Modal";
 import Loading from "utls/products/Loading";
+import { updateChangeEmail } from "store/actions/user.action";
 
 const EmailStepper = ({ users }) => {
   const [loading, setLoading] = useState(false);
@@ -35,16 +36,25 @@ const EmailStepper = ({ users }) => {
         }),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+      setLoading(true);
+      dispatch(updateChangeEmail(values));
     },
   });
 
-  const closeModal = () => setEmailModal(true);
+  const closeModal = () => setEmailModal(false);
   const openModal = () => {
     setEmailModal(true);
     console.log("Email MOdal");
   };
 
+  // Close modal
+  useEffect(() => {
+    if (notifications && notifications.success) {
+      closeModal();
+    }
+    setLoading(false);
+  }, [notifications]);
   const handleNext = () => {
     setActiveState((preActiveStep) => preActiveStep + 1);
   };
@@ -86,6 +96,7 @@ const EmailStepper = ({ users }) => {
                >Edit Email</Button> */}
           <label
             htmlFor="my-modal-3"
+         
             className="btn btn-primary bg-[#1976d2] text-white hover:bg-blue-600"
           >
             open modal
@@ -96,18 +107,20 @@ const EmailStepper = ({ users }) => {
       {/* The button to open modal */}
 
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box relative bg-slate-200 w-11/12 max-w-5xl">
-          <label
-            htmlFor="my-modal-3"
-            className="btn btn-sm btn-circle absolute right-2 top-2 bg-red-200"
-          >
-            ✕
-          </label>
-          <h3 className="text-lg font-bold my-5">Update Your Email</h3>
 
-          
+      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+
+        
+        <div className="modal">
+          <div className="modal-box relative bg-slate-200 w-11/12 max-w-5xl">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-circle absolute right-2 top-2 bg-red-200"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold my-5">Update Your Email</h3>
+
             <Stepper activeStep={activeState}>
               {steps.map((label, index) => {
                 return (
@@ -119,64 +132,70 @@ const EmailStepper = ({ users }) => {
             </Stepper>
 
             <form className="" onSubmit={formik.handleSubmit}>
-         
-          {activeState === 0 ? (
-            <div className="form-group my-5">
-              <TextField
-                style={{ width: "100%" }}
-                name="email"
-                label="Enter Your Current Email"
-                variant="outlined"
-                {...formik.getFieldProps("email")}
-                {...errorHelper(formik, "email")}
-              />
+              {activeState === 0 ? (
+                <div className="form-group my-5">
+                  <TextField
+                    style={{ width: "100%" }}
+                    name="email"
+                    label="Enter Your Current Email"
+                    variant="outlined"
+                    {...formik.getFieldProps("email")}
+                    {...errorHelper(formik, "email")}
+                  />
 
-              <div className="my-3">
-                {formik.values.email && !formik.errors.email ? nextBtn() : null}
-              </div>
-            </div>
-          ) : null}
-
-          {activeState === 1 ? (
-            <div className="form-group my-5">
-              <TextField
-                style={{ width: "100%" }}
-                name="newEmail"
-                label="Enter Your New Email"
-                variant="outlined"
-                {...formik.getFieldProps("newEmail")}
-                {...errorHelper(formik, "newEmail")}
-              />
-
-              <div className="flex  my-5">
-                <div className="mr-3">
-                  {formik.values.newEmail && !formik.errors.newEmail
-                    ? nextBtn()
-                    : null}
+                  <div className="my-3">
+                    {formik.values.email && !formik.errors.email
+                      ? nextBtn()
+                      : null}
+                  </div>
                 </div>
-                <div className="">{backBtn()}</div>
-              </div>
-            </div>
-          ) : null}
+              ) : null}
 
-          {activeState === 2 ? (
-            <div className="form-group">
-              {loading ? (
-                <Loading />
-              ) : (
-                <div className="flex  my-5 gap-2">
-                  <Button onClick={formik.submitForm}  variant="contained" color="primary">
-                    Submit
-                  </Button>
-                  {backBtn()}
+              {activeState === 1 ? (
+                <div className="form-group my-5">
+                  <TextField
+                    style={{ width: "100%" }}
+                    name="newEmail"
+                    label="Enter Your New Email"
+                    variant="outlined"
+                    {...formik.getFieldProps("newEmail")}
+                    {...errorHelper(formik, "newEmail")}
+                  />
+
+                  <div className="flex  my-5">
+                    <div className="mr-3">
+                      {formik.values.newEmail && !formik.errors.newEmail
+                        ? nextBtn()
+                        : null}
+                    </div>
+                    <div className="">{backBtn()}</div>
+                  </div>
                 </div>
-                
-              )}
-            </div>
-          ) : null}
-          </form>
+              ) : null}
+
+              {activeState === 2 ? (
+                <div className="form-group">
+                  {loading ? (
+                    <Loading />
+                  ) : (
+                    <div className="flex  my-5 gap-2">
+                      <Button
+                        onClick={formik.submitForm}
+                        variant="contained"
+                        color="primary"
+                      >
+                        Submit
+                      </Button>
+                      {backBtn()}
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </form>
+          </div>
         </div>
-      </div>
+        
+     
     </>
   );
 };

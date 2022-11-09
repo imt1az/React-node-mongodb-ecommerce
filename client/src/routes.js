@@ -13,6 +13,7 @@ import UserDashboard from "components/dashboard";
 import AuthGuard from "components/Hoc/AuthGuard";
 import DashboardLayout from "components/Hoc/dasboardLayout";
 import UserInfo from "components/dashboard/user/UserInfo";
+import AdminProduct from "components/dashboard/admin/Products";
 
 
 
@@ -55,6 +56,10 @@ useEffect(()=>{
         {/* <Route path='/*' element={<AuthGuard/>}>
           <Route path='dashboard' element={<UserDashboard/>}/>
         </Route> */}
+        
+        {/* Admin */}
+        <Route path="/dashboard/admin/admin_products"  element={<AuthGuard><AdminProduct/></AuthGuard>} />
+         
 
         <Route path="/dashboard"  element={<AuthGuard><UserDashboard/></AuthGuard>} />
         <Route path="/dashboard/user/user_info"  element={<AuthGuard><UserInfo/></AuthGuard>} />

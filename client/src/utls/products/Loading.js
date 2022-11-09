@@ -7,7 +7,7 @@ const Loading = ({full}) => {
                 {
                     full ?
                     <div className={`min-h-screen flex justify-center items-center`}>
-                    <button className="font-bold text-gray-900">loading....</button>
+                    <button className="btn btn-square loading"></button>
                     </div>
                     : ''
                 }

@@ -1,6 +1,8 @@
 import axios from "axios"
-import * as actions from './index'
 
+import * as actions from './index'
+import { getAuthHeader, getTokenCookie, removeTokenCookie } from 'utls/tools';
+axios.defaults.headers.post['Content-Type']='application/json';
 
 export const productsBySort = ({limit,order,sortBy,where})=>{
 
@@ -35,4 +37,30 @@ export const productsBySort = ({limit,order,sortBy,where})=>{
      }
    }
    
+}
+
+
+export const productsByPaginate =(args)=>{
+    return async(dispatch)=>{
+        try{
+            const products = await axios.post(`/api/products/paginate/all`,args)
+            dispatch(actions.productsByPaginate(products.data));
+        } catch(error){
+            console.log('Error')
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}
+
+export const ProductRemove =(id)=>{
+    return async(dispatch)=>{
+        try{
+             await axios.delete(`/api/products/product/${id}`,getAuthHeader())
+            dispatch(actions.productRemove())
+             dispatch(actions.successGlobal('Products Deleted'))
+        } catch(error){
+            console.log('Error')
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
 }
