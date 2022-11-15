@@ -3,8 +3,9 @@ import { combineReducers } from 'redux';
 import users from './users.reducer';
 import products from './products.reducer'
 import notifications from './notification.reducer'
+import brands from './brand.reducer'
 const appReducers = combineReducers({
-    users,products,notifications
+    users,products,notifications,brands
 })
 
 

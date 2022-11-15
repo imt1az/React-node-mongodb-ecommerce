@@ -16,7 +16,7 @@ const defaultValues = {
   brand: [],
   min: 0,
   max: 5000,
-  frets: [],
+
   page: 1,
 };
 const AdminProduct = (props) => {
@@ -47,9 +47,9 @@ const AdminProduct = (props) => {
     },
   });
 
-  const resetSearch = ()=>{
-           setSearchValues(defaultValues)
-  }
+  const resetSearch = () => {
+    setSearchValues(defaultValues);
+  };
 
   const goToPage = (page) => {
     setSearchValues({ page: page });
@@ -79,18 +79,24 @@ const AdminProduct = (props) => {
   return (
     <DashboardLayout className="" title="Products">
       <div className="products_table">
-        <div >
+        <div>
           <form className="my-5" onSubmit={formik.handleSubmit}>
             <TextField
               style={{ width: "100%" }}
               name="keywords"
               label="Enter Your Search"
               variant="outlined"
-              {...formik.getFieldProps('keywords')}
-              {...errorHelper(formik,'keywords')}
+              {...formik.getFieldProps("keywords")}
+              {...errorHelper(formik, "keywords")}
             />
           </form>
-          <Button variant="contained" color="primary" onClick={()=>resetSearch()}>Reset Search</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => resetSearch()}
+          >
+            Reset Search
+          </Button>
         </div>
         <hr className="my-5" />
         <ProductsTable

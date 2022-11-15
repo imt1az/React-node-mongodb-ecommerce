@@ -64,3 +64,15 @@ export const ProductRemove =(id)=>{
         }
     }
 }
+export const ProductAdd =(data)=>{
+    return async(dispatch)=>{
+        try{
+          const product = await axios.post(`/api/products/`,data,getAuthHeader())
+            dispatch(actions.productAdd(product.data))
+             dispatch(actions.successGlobal('Products Added Successfully'))
+        } catch(error){
+            console.log('Error')
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}

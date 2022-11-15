@@ -18,7 +18,7 @@ const productSchema = mongoose.Schema({
     frets:{
         type:Number
     },
-    woodtype:{
+    size:{
         type:String,
         
     },

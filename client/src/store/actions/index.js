@@ -2,9 +2,11 @@ import {
   AUTH_USER,
   CLEAR_NOTIFICATIONS,
   ERROR_GLOBAL,
+  GET_ALL_BRANDS,
   GET_PRODUCT_BY_DATE,
   GET_PRODUCT_BY_SOLD,
   GET_PROD_PAGINATE,
+  PRODUCT_ADD,
   REMOVE_PRODUCT,
   SIGN_OUT,
   SUCCESS_GLOBAL,
@@ -51,6 +53,16 @@ export const productsByPaginate = (products)=>({
 export const productRemove = ()=>({
   type:REMOVE_PRODUCT
 
+})
+export const productAdd = (product)=>({
+  type:PRODUCT_ADD,
+  payload:product
+})
+
+// Brands
+export const getAllBrands = (brands)=>({
+  type:GET_ALL_BRANDS,
+  payload:brands
 })
 
 

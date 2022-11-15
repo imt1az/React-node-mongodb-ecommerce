@@ -47,7 +47,7 @@ useEffect(()=>{
   } else{
       setLoading(false);
   }
-},[notifications,props.history])
+},[notifications,navigate])
   return (
     <>
       {loading ? (
