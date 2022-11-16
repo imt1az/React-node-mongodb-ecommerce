@@ -76,3 +76,15 @@ export const ProductAdd =(data)=>{
         }
     }
 }
+export const ProductById =(id)=>{
+    return async(dispatch)=>{
+        try{
+           const product = await axios.get(`/api/products/product/${id}`)
+           dispatch(actions.prodById(product.data))
+             
+        } catch(error){
+            console.log('Error')
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}

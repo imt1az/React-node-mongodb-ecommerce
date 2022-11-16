@@ -11,93 +11,91 @@ import DashboardLayout from "components/Hoc/dasboardLayout";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { get_all_brands } from "store/actions/brand.action";
-import { ProductAdd } from "store/actions/products.action";
+import { ProductAdd, ProductById } from "store/actions/products.action";
 
 import Loading from "utls/products/Loading";
 import { errorHelper } from "utls/tools";
-import { validate } from "./formValue";
+import { validate, formValue,getValuesToEdit } from "./formValue";
 import ImageView from "./ImageView";
 import PicUpload from "./PicUpload";
 
-
-
-
-
-const AddProduct = (props) => {
+const EditProduct = (props) => {
+  const [values, setValues] = useState(formValue);
   const [loading, setLoading] = useState(false);
+  const product = useSelector((state) => state.products);
   const notifications = useSelector((state) => state.notifications);
   const brands = useSelector((state) => state.brands);
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      model: "",
-      size: "",
-      brand: "",
+  const { id } = useParams();
 
-      woodtype: "",
-      description: "",
-      price: "",
-      available: "",
-      shipping: false,
-      images:[]
-    },
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: values,
     validationSchema: validate,
     onSubmit: (values) => {
-      
       handleSubmit(values);
     },
   });
-   // handleImage
-   const picValue = (pic)=>{
-        const picArray = formik.values.images;
-        picArray.push(pic.url);
-        formik.setFieldValue('images',picArray)
-  }
-  const deletePic = (index)=>{
+  // handleImage
+  const picValue = (pic) => {
     const picArray = formik.values.images;
-    picArray.splice(index,1);
-    formik.setFieldValue('images',picArray)
-  }
+    picArray.push(pic.url);
+    formik.setFieldValue("images", picArray);
+  };
+  const deletePic = (index) => {
+    const picArray = formik.values.images;
+    picArray.splice(index, 1);
+    formik.setFieldValue("images", picArray);
+  };
 
-  const handleSubmit = (values)=>{
+  const handleSubmit = (values) => {
     setLoading(true);
     dispatch(ProductAdd(values));
-  }
+  };
 
- 
-
- 
-
-  useEffect(()=>{
-      if(notifications && notifications.success){
-        navigate('/dashboard/admin/admin_products')
-      }
-      if(notifications && notifications.error){
-        setLoading(false)
-      }
-  },[notifications,navigate])
+  useEffect(() => {
+    if (notifications && notifications.success) {
+      navigate("/dashboard/admin/admin_products");
+    }
+    if (notifications && notifications.error) {
+      setLoading(false);
+    }
+  }, [notifications, navigate]);
 
   useEffect(() => {
     dispatch(get_all_brands());
-  }, [dispatch]);
+    if (id) {
+      // console.log(id);
+      dispatch(ProductById(id));
+    }
+  }, [dispatch, id]);
 
-  console.log(formik.values)
+  useEffect(()=>{
+     if(product && product.byId){
+        setValues(getValuesToEdit(product.byId))
+     }
+  },[product])
+
+  console.log(formik.values);
   return (
     <div>
-      <DashboardLayout title="Add Product">
+      <DashboardLayout title="Edit Product">
         {loading ? (
           <Loading />
         ) : (
           <>
-        <ImageView formik={formik} deletePic={(index)=> deletePic(index)}/>
-          <Divider className="mt-5 mb-5"/>
-          <PicUpload picValue={(pic)=>picValue(pic)}/>
-         
-          <Divider className="mt-10"/>
-       
+            <ImageView
+              formik={formik}
+              deletePic={(index) => deletePic(index)}
+            />
+            <Divider className="mt-5 mb-5" />
+            <PicUpload picValue={(pic) => picValue(pic)} />
+
+            <Divider className="mt-10" />
+
             <form className="" onSubmit={formik.handleSubmit}>
               <div className="form-group my-5">
                 <TextField
@@ -210,4 +208,4 @@ const AddProduct = (props) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

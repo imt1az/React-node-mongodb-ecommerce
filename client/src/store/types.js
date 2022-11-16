@@ -5,6 +5,7 @@ export const GET_PRODUCT_BY_DATE = 'get_product_by_date'
 export const GET_PROD_PAGINATE = 'get_prod_paginate'
 export const REMOVE_PRODUCT = 'remove_product'
 export const PRODUCT_ADD = 'product_add'
+export const PROD_BY_ID = 'prod_by_id'
 
 // Notifications
 

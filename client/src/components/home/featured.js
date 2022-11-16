@@ -6,14 +6,14 @@ const Featured = () => {
 
     const carrouselItems = [
         {
-            img:'/images/featured/featured_home.jpg',
+            img:'/images/featured/01.jpg',
             lineOne:'Fender',
             lineTwo:'Custom shop',
             lineTitle:'Show Now',
             linkTo:'/shop'
         },
         {
-            img:'/images/featured/featured_home_2.jpg',
+            img:'/images/featured/post2.jpg',
             lineOne:'B-Stock',
             lineTwo:'Awesome discounts',
             lineTitle:'View offers',

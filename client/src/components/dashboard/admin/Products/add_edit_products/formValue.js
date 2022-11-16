@@ -5,12 +5,25 @@ export const formValue = {
   size: "",
   brand: "",
 
-  
   description: "",
   price: "",
   available: "",
   shipping: false,
-  
+  images: [],
+};
+
+export const getValuesToEdit = (product) => {
+  return {
+    model: product.model,
+    size: product.size,
+    brand: product.brand._id,
+
+    description: product.description,
+    price: product.price,
+    available: product.available,
+    shipping: product.shipping,
+    images: product.images,
+  };
 };
 
 export const validate = () =>
@@ -19,7 +32,6 @@ export const validate = () =>
     size: Yup.string().oneOf(["S", "L", "M", "XL"], "Only S L M XL is allowed"),
     brand: Yup.string().required("Sorry, brand is required"),
 
-   
     description: Yup.string().required("Sorry, description is required"),
     price: Yup.number()
       .required("Must Be a Price")

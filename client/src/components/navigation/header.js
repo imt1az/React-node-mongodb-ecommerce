@@ -24,10 +24,12 @@ const Header = ({ users, signOutUser }) => {
           <div className="flex justify-between">
             <div className="flex justify-center items-center">
              
-                
+                <Link to='/'>
                 <div>
                   <img src={logo} className="w-36" alt="" />
                   </div>
+                  </Link>
+               
                 
              
               <div className="hidden md:block ml-8 group relative">

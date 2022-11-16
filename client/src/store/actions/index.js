@@ -7,6 +7,7 @@ import {
   GET_PRODUCT_BY_SOLD,
   GET_PROD_PAGINATE,
   PRODUCT_ADD,
+  PROD_BY_ID,
   REMOVE_PRODUCT,
   SIGN_OUT,
   SUCCESS_GLOBAL,
@@ -57,6 +58,11 @@ export const productRemove = ()=>({
 export const productAdd = (product)=>({
   type:PRODUCT_ADD,
   payload:product
+})
+export const prodById = (product)=>({
+  type:PROD_BY_ID,
+  payload:product
+
 })
 
 // Brands

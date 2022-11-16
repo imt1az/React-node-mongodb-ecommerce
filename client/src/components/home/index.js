@@ -7,7 +7,7 @@ import createMixins from '@mui/material/styles/createMixins';
 import ProductCard from 'utls/products/ProductCard';
 import Loading from 'utls/products/Loading';
 const slimPromotion = {
-  img:'/images/featured/featured_home_3.jpg',
+  img:'/images/featured/post2.jpg',
   lineOne:'Up To 30% Off',
   lineTwo:'In Second Hand Product',
   linkTitle:'Show Now',
