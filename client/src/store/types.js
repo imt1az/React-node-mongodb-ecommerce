@@ -6,7 +6,7 @@ export const GET_PROD_PAGINATE = 'get_prod_paginate'
 export const REMOVE_PRODUCT = 'remove_product'
 export const PRODUCT_ADD = 'product_add'
 export const PROD_BY_ID = 'prod_by_id'
-
+export const CLEAR_CURRENT_PRODUCT = 'clear_current_product'
 // Notifications
 
 export const ERROR_GLOBAL ='error_global'

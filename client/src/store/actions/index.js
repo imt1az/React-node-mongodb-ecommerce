@@ -1,5 +1,6 @@
 import {
   AUTH_USER,
+  CLEAR_CURRENT_PRODUCT,
   CLEAR_NOTIFICATIONS,
   ERROR_GLOBAL,
   GET_ALL_BRANDS,
@@ -63,6 +64,10 @@ export const prodById = (product)=>({
   type:PROD_BY_ID,
   payload:product
 
+})
+
+export const clearCurrentProduct = ()=>({
+  type:CLEAR_CURRENT_PRODUCT
 })
 
 // Brands

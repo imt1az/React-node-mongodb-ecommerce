@@ -13,13 +13,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { get_all_brands } from "store/actions/brand.action";
-import { ProductAdd, ProductById } from "store/actions/products.action";
+import { EditProductById, ProductAdd, ProductById } from "store/actions/products.action";
 
 import Loading from "utls/products/Loading";
 import { errorHelper } from "utls/tools";
 import { validate, formValue,getValuesToEdit } from "./formValue";
 import ImageView from "./ImageView";
 import PicUpload from "./PicUpload";
+import {clearCurrentProduct} from 'store/actions/index'
 
 const EditProduct = (props) => {
   const [values, setValues] = useState(formValue);
@@ -53,17 +54,15 @@ const EditProduct = (props) => {
 
   const handleSubmit = (values) => {
     setLoading(true);
-    dispatch(ProductAdd(values));
+    dispatch(EditProductById(values,id));
   };
 
   useEffect(() => {
-    if (notifications && notifications.success) {
-      navigate("/dashboard/admin/admin_products");
+    if (notifications) {
+      setLoading(false)
     }
-    if (notifications && notifications.error) {
-      setLoading(false);
-    }
-  }, [notifications, navigate]);
+  
+  }, [notifications]);
 
   useEffect(() => {
     dispatch(get_all_brands());
@@ -78,6 +77,10 @@ const EditProduct = (props) => {
         setValues(getValuesToEdit(product.byId))
      }
   },[product])
+
+  useEffect(()=>{
+      dispatch(clearCurrentProduct())
+  },[dispatch])
 
   console.log(formik.values);
   return (
@@ -198,7 +201,7 @@ const EditProduct = (props) => {
                 </FormControl>
               </div>
               <Button variant="contained" color="primary" type="submit">
-                Add Product
+                Edit Product
               </Button>
             </form>
           </>
